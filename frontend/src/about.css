@@ -1,0 +1,244 @@
+
+.about-banner {
+  padding: 75px 0;
+  color: #fff;
+  background:
+    linear-gradient(rgba(8, 35, 19, .75), rgba(8, 35, 19, .75)),
+    url("/assets/img/page-title-bg.jpg") center/cover no-repeat;
+}
+
+.about-banner h1 {
+  font-family: "Marcellus", serif;
+  font-size: 42px;
+  margin-bottom: 12px;
+}
+
+.about-banner p {
+  margin: 0;
+}
+
+.about-banner a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.about-intro {
+  padding: 85px 0;
+}
+
+.about-intro-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  align-items: center;
+  gap: 55px;
+}
+
+.about-image {
+  position: relative;
+}
+
+.about-image img {
+  width: 100%;
+  min-height: 430px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.about-experience {
+  position: absolute;
+  bottom: 25px;
+  left: 25px;
+  padding: 20px 30px;
+  background: #4b8b3b;
+  color: #fff;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+}
+
+.about-experience strong {
+  font-size: 36px;
+  font-family: "Marcellus", serif;
+}
+
+.about-experience span {
+  font-size: 14px;
+}
+
+.about-kicker,
+.about-section-heading span {
+  color: #4b8b3b;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.about-description h2 {
+  font-family: "Marcellus", serif;
+  font-size: 36px;
+  line-height: 1.35;
+  color: #263a2c;
+  margin: 15px 0 20px;
+}
+
+.about-description h2 strong {
+  color: #4b8b3b;
+}
+
+.about-description > p {
+  color: #666;
+  line-height: 1.9;
+  margin-bottom: 16px;
+}
+
+.about-director {
+  border-left: 4px solid #4b8b3b;
+  padding: 8px 0 8px 18px;
+  margin: 25px 0;
+}
+
+.about-director h3 {
+  font-size: 19px;
+  margin-bottom: 5px;
+  color: #263a2c;
+}
+
+.about-director span {
+  color: #4b8b3b;
+  font-weight: 600;
+}
+
+.about-director p {
+  color: #777;
+  margin: 5px 0 0;
+}
+
+.about-contact-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 13px 22px;
+  background: #4b8b3b;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.about-contact-link:hover {
+  background: #263a2c;
+  color: #fff;
+}
+
+.about-vision {
+  background: #f6f9f4;
+  padding: 75px 0;
+}
+
+.about-section-heading {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.about-section-heading h2 {
+  font-family: "Marcellus", serif;
+  font-size: 34px;
+  color: #263a2c;
+  margin: 12px 0;
+}
+
+.about-section-heading p {
+  color: #777;
+}
+
+.about-purpose-card {
+  background: #fff;
+  padding: 35px;
+  height: 100%;
+  border-radius: 7px;
+  border: 1px solid #e6eee2;
+}
+
+.about-purpose-card > svg {
+  color: #4b8b3b;
+  margin-bottom: 20px;
+}
+
+.about-purpose-card h3 {
+  font-family: "Marcellus", serif;
+  color: #263a2c;
+  margin-bottom: 14px;
+}
+
+.about-purpose-card p {
+  color: #666;
+  line-height: 1.8;
+  margin: 0;
+}
+
+.about-reasons {
+  padding: 80px 0;
+}
+
+.about-reason-card {
+  padding: 30px;
+  height: 100%;
+  border: 1px solid #e7eee4;
+  border-radius: 7px;
+  transition: .3s ease;
+}
+
+.about-reason-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, .07);
+}
+
+.about-reason-icon {
+  color: #4b8b3b;
+  margin-bottom: 20px;
+}
+
+.about-reason-card h3 {
+  font-family: "Marcellus", serif;
+  font-size: 20px;
+  color: #263a2c;
+}
+
+.about-reason-card p {
+  color: #777;
+  line-height: 1.8;
+  margin: 0;
+}
+
+@media (max-width: 991px) {
+  .about-intro-grid {
+    grid-template-columns: 1fr;
+    gap: 35px;
+  }
+
+  .about-image img {
+    min-height: 300px;
+  }
+}
+
+@media (max-width: 576px) {
+  .about-banner {
+    padding: 50px 0;
+  }
+
+  .about-banner h1 {
+    font-size: 32px;
+  }
+
+  .about-intro {
+    padding: 55px 0;
+  }
+
+  .about-description h2 {
+    font-size: 28px;
+  }
+
+  .about-section-heading h2 {
+    font-size: 28px;
+  }
+}
