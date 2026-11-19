@@ -27,7 +27,6 @@ export function SiteHeader() {
             }}
             alt=""
           />
-          <span>Viswa <b>Farmland</b></span>
         </Link>
 
         <button
