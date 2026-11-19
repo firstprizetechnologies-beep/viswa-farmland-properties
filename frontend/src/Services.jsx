@@ -13,6 +13,7 @@ import {
 
 import { SiteHeader, SiteFooter } from "./PublicProperties";
 import "./services.css";
+import { Link } from "react-router-dom";
 
 const services = [
   {
@@ -86,7 +87,7 @@ export default function Services() {
           <div className="vf-page-title-inner">
             <h1>Our Services</h1>
             <div className="vf-breadcrumb">
-              <a href="/">Home</a>
+              <Link to="/">Home</Link>
               <span>/</span>
               <span>Services</span>
             </div>

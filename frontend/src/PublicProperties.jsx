@@ -52,9 +52,9 @@ export function SiteHeader() {
 
 export function SiteFooter() {
   return <footer className="vf-footer"><div className="vf-footer-top"><div className="vf-footer-grid">
-    <div><a className="vf-footer-brand" href="/">Viswa Farmland</a><p>Viswa Farmland Properties</p><p>Womens Christian College Junction<br/>Nagercoil, Pin - 629001</p><p><b>Phone:</b> +91 9150102491, +91 6384849747</p><p><b>Email:</b> viswaproperties.2026@gmail.com</p></div>
+    <div><Link className="vf-footer-brand" to="/">Viswa Farmland</Link><p>Viswa Farmland Properties</p><p>Womens Christian College Junction<br/>Nagercoil, Pin - 629001</p><p><b>Phone:</b> +91 9150102491, +91 6384849747</p><p><b>Email:</b> viswaproperties.2026@gmail.com</p></div>
     <div><h4>Useful Links</h4><Link to="/">Home</Link><Link to="/about">About Us</Link><Link to="/services">Services</Link><Link to="/properties">Properties</Link><Link to="/contact">Contact</Link></div>
-    <div><h4>Our Services</h4><a href="/services">Farmland Sales</a><a href="/services">Agricultural Land</a><a href="/services">Property Investment</a><a href="/services">Site Visit Assistance</a></div>
+    <div><h4>Our Services</h4><Link to="/services">Farmland Sales</Link><Link to="/services">Agricultural Land</Link><Link to="/services">Property Investment</Link><Link to="/services">Site Visit Assistance</Link></div>
   </div></div><div className="vf-copyright"><span>© {new Date().getFullYear()} <b>Viswa Farmland Properties</b>. All Rights Reserved<br/><small>Designed by <a href="https://www.jandctechnologies.com/" target="_blank" rel="noreferrer">JandC Tech</a></small></span><div className="vf-social"><a href="https://www.facebook.com/profile.php?id=61585438610910" target="_blank" rel="noreferrer">f</a><a href="https://www.instagram.com/Viswa_Properties.2026" target="_blank" rel="noreferrer">◎</a><a href="https://www.youtube.com/@Viswaproperties_2026" target="_blank" rel="noreferrer">▶</a></div></div></footer>;
 }
 
@@ -78,12 +78,12 @@ export default function PublicProperties() {
   useEffect(()=>{ let alive=true; api.get("/public/properties").then(({data})=>{if(alive)setProperties(Array.isArray(data)?data:data.properties||[]);}).catch(()=>{if(alive)setError("Unable to load properties at the moment. Please contact us for assistance.");}).finally(()=>{if(alive)setLoading(false);}); return()=>{alive=false;}; },[]);
   const visible = useMemo(()=>properties.filter(p=>[p.title,p.location,p.district].join(" ").toLowerCase().includes(search.trim().toLowerCase())),[properties,search]);
   return <div className="vf-public"><SiteHeader/><main>
-    <section className="vf-page-title contact-banner"><div className="vf-page-title-inner"><h1>Our Properties</h1><div className="vf-breadcrumb"><a href="/">Home</a><span>/</span><b>Properties</b></div></div></section>
+    <section className="vf-page-title contact-banner"><div className="vf-page-title-inner"><h1>Our Properties</h1><div className="vf-breadcrumb"><Link to="/">Home</Link><span>/</span><b>Properties</b></div></div></section>
     <section className="vf-listing-section"><div className="vf-container"><div className="vf-section-title"><h2>AVAILABLE PROPERTIES</h2><p>Find Your Ideal Farmland Investment</p></div>
       <div className="vf-search"><input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Search by property name or location..." aria-label="Search properties"/></div>
       {loading&&<div className="vf-state">Loading available properties…</div>}
       {error&&<div className="vf-state vf-error">{error}</div>}
-      {!loading&&!error&&visible.length===0&&<div className="vf-empty"><Sprout size={54}/><h3>No Properties Available</h3><p>{search?"No properties match your search. Try another name or location.":"Please contact us for currently available farmland properties."}</p><a className="vf-btn vf-green" href="/contact">Contact Us</a></div>}
+      {!loading&&!error&&visible.length===0&&<div className="vf-empty"><Sprout size={54}/><h3>No Properties Available</h3><p>{search?"No properties match your search. Try another name or location.":"Please contact us for currently available farmland properties."}</p><Link className="vf-btn vf-green" to="/contact">Contact Us</Link></div>}
       {!loading&&!error&&visible.length>0&&<div className="vf-property-grid">{visible.map(property=>{
         const image=(property.images||[]).map(imageUrl).find(Boolean)||FALLBACK_IMAGE;
         return <article className="vf-property-card" key={property._id}><div className="vf-property-image"><img src={image} alt={property.title} loading="lazy" onError={e=>{e.currentTarget.src=FALLBACK_IMAGE;}}/>

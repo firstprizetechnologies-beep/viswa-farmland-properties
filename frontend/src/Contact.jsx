@@ -2,6 +2,7 @@
 import React from "react";
 import { SiteHeader, SiteFooter } from "./PublicProperties";
 import "./contact.css";
+import { Link } from "react-router-dom";
 
 export default function Contact() {
   const address =
@@ -30,7 +31,7 @@ export default function Contact() {
         <div class="vf-page-title-inner">
         <h1>Contact Us</h1>
         {/*<p>Explore Available Farmland and Agricultural Properties</p>*/}
-        <div class="vf-breadcrumb"><a href="/">Home</a><span>/</span><b>Contact Us</b></div></div>
+        <div class="vf-breadcrumb"><Link to="/">Home</Link><span>/</span><b>Contact Us</b></div></div>
         </section>
 
         {/* Google Map */}

@@ -13,6 +13,7 @@ import {
 
 import { SiteHeader, SiteFooter } from "./PublicProperties";
 import "./about.css";
+import { Link } from "react-router-dom";
 
 const reasons = [
   {
@@ -64,7 +65,7 @@ export default function About() {
           <div className="vf-page-title-inner">
             <h1>About Us</h1>
             <div class="vf-breadcrumb">
-              <a href="/">Home</a> / About Us
+              <Link to="/">Home</Link> / About Us
             </div>
           </div>
         </section>
@@ -120,9 +121,9 @@ export default function About() {
                 <p>Viswa Farmland Properties</p>
               </div>
 
-              <a href="/contact" className="about-contact-link">
+              <Link to="/contact" className="about-contact-link">
                 Contact Our Team <ArrowRight size={17} />
-              </a>
+              </Link>
             </div>
 
           </div>
