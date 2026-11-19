@@ -45,7 +45,7 @@ export default function Home() {
     aria-hidden={i !== active}
   />
 ))} 
-      <div className="vf-hero-content" key={active}><p className="vf-hero-kicker">VISWA FARMLAND PROPERTIES</p><h1>{slide.title}</h1><p>{slide.text}</p><a href="/properties" className="vf-hero-button">Explore Properties <ArrowRight size={17}/></a></div>
+      <div className="vf-hero-content" key={active}><p className="vf-hero-kicker">VISWA FARMLAND PROPERTIES</p><h1>{slide.title}</h1><p>{slide.text}</p><Link to="/properties" className="vf-hero-button">Explore Properties <ArrowRight size={17}/></Link></div>
       <button className="vf-hero-arrow prev" onClick={()=>setActive(v=>(v-1+slides.length)%slides.length)} aria-label="Previous slide">‹</button><button className="vf-hero-arrow next" onClick={()=>setActive(v=>(v+1)%slides.length)} aria-label="Next slide">›</button>
       <div className="vf-hero-dots">{slides.map((s,i)=><button key={s.image} className={i===active?"active":""} onClick={()=>setActive(i)} aria-label={`Show slide ${i+1}`}/>)}</div>
     </section>
