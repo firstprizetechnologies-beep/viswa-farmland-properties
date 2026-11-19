@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { ArrowRight, Sprout, House, Flower2, TrendingUp, Signpost, Droplets, UserCheck, MapPin, Headset, TreePine, Users } from "lucide-react";
 import { SiteHeader, SiteFooter } from "./PublicProperties";
 import "./home.css";
+import { Link } from "react-router-dom";
 
 const slides = [
   { image: "/assets/img/hero_1.jpg", title: "Invest in Land, Grow Your Future with Viswa Farmland Properties", text: "Discover the beauty of nature and the value of smart land investments. We help you find the right farmland to build your dreams, secure your future, and enjoy the benefits of nature." },
