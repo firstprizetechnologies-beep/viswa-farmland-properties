@@ -4,7 +4,7 @@ import api from "./api";
 import "./public-properties.css";
 import { Link, NavLink } from "react-router-dom";
 
-const WHATSAPP_NUMBER = "919150102491";
+const WHATSAPP_NUMBER = "919360940142";
 const FALLBACK_IMAGE = "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80";
 const imageUrl = (image) => typeof image === "string" ? image : image?.url || "";
 const priceText = (price) => price === undefined || price === null || price === "" || Number(price) === 0 ? "Price on Request" : typeof price === "number" || !Number.isNaN(Number(price)) ? `₹${Number(price).toLocaleString("en-IN")}` : price;

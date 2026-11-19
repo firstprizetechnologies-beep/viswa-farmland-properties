@@ -199,7 +199,9 @@ export default function About() {
             available farmland opportunities.
           </p>
           <a
-            href="https://wa.me/919360940142"
+            href={`https://wa.me/919360940142?text=${encodeURIComponent(
+                      "Hello, I am interested in your farmland properties."
+                    )}`}
             target="_blank"
             rel="noreferrer"
           >
