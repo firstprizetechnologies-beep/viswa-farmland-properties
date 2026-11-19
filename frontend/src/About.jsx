@@ -199,7 +199,7 @@ export default function About() {
             available farmland opportunities.
           </p>
           <a
-            href="https://wa.me/919150102491"
+            href="https://wa.me/919360940142"
             target="_blank"
             rel="noreferrer"
           >

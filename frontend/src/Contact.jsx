@@ -129,7 +129,7 @@ export default function Contact() {
                     Chat with our property team.
                   </p>
                   <a
-                    href={`https://wa.me/919150102491?text=${encodeURIComponent(
+                    href={`https://wa.me/919360940142?text=${encodeURIComponent(
                       "Hello, I am interested in your farmland properties."
                     )}`}
                     target="_blank"
