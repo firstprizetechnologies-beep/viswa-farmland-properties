@@ -75,19 +75,44 @@ function PropertyModal({ property, onClose, onSaved }) {
   }
 
   async function submit(e) {
-    e.preventDefault(); setBusy(true); setError("");
-    const data = new FormData();
-    Object.entries(form).forEach(([key, value]) => data.append(key, value));
-    data.append("amenities", JSON.stringify(form.amenities.split(",").map(x=>x.trim()).filter(Boolean)));
-    data.append("removeImages", JSON.stringify(removedImages));
-    newFiles.forEach(file => data.append("images", file));
-    try {
-      if (property) await api.put(`/admin/properties/${property._id}`, data);
-      else await api.post("/admin/properties", data);
-      onSaved();
-    } catch (err) {
-      setError(err.response?.data?.message || "Could not save property.");
-    } finally { setBusy(false); }
+      e.preventDefault();
+      setBusy(true);
+      setError("");
+
+      const data = new FormData();
+
+      // Append all fields except amenities
+      Object.entries(form).forEach(([key, value]) => {
+        if (key !== "amenities") {
+          data.append(key, value);
+        }
+      });
+
+      // Append amenities only once
+      const amenitiesArray = form.amenities
+        .split(",")
+        .map(x => x.trim())
+        .filter(Boolean);
+
+      data.append("amenities", JSON.stringify(amenitiesArray));
+
+      data.append("removeImages", JSON.stringify(removedImages));
+
+      newFiles.forEach(file => data.append("images", file));
+
+      try {
+        if (property) {
+          await api.put(`/admin/properties/${property._id}`, data);
+        } else {
+          await api.post("/admin/properties", data);
+        }
+
+        onSaved();
+      } catch (err) {
+        setError(err.response?.data?.message || "Could not save property.");
+      } finally {
+        setBusy(false);
+      }
   }
 
   return <div className="modal-backdrop" onMouseDown={e=>{if(e.target===e.currentTarget)onClose();}}>
