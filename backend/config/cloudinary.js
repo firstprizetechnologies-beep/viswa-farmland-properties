@@ -13,6 +13,7 @@ const storage = new CloudinaryStorage({
   cloudinary,
   params: {
     folder: "viswa-farmland-properties",
+    resource_type: "image",
     allowed_formats: ["jpg", "jpeg", "png", "webp"],
   },
 });

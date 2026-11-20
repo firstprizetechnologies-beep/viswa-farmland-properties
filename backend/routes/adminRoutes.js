@@ -35,32 +35,91 @@ router.post("/properties", upload.array("images", 10), async (req, res, next) =>
   } catch (error) { next(error); }
 });
 
+
 router.put("/properties/:id", upload.array("images", 10), async (req, res, next) => {
   try {
     const property = await Property.findById(req.params.id);
-    if (!property) return res.status(404).json({ message: "Property not found" });
+
+    if (!property) {
+      return res.status(404).json({ message: "Property not found" });
+    }
 
     const data = parsePropertyInput(req.body);
+
     let images = property.images || [];
+
     let removeImages = req.body.removeImages || [];
+
     if (typeof removeImages === "string") {
-      try { removeImages = JSON.parse(removeImages); } catch { removeImages = []; }
-    }
-    if (Array.isArray(removeImages) && removeImages.length) {
-      images = images.filter(url => !removeImages.includes(url));
-      for (const url of removeImages) {
-        const filename = path.basename(new URL(url).pathname);
-        const filePath = path.join(__dirname, "..", "uploads", filename);
-        if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
+      try {
+        removeImages = JSON.parse(removeImages);
+      } catch {
+        removeImages = [removeImages];
       }
     }
 
+    if (!Array.isArray(removeImages)) {
+      removeImages = [];
+    }
+
+    // Delete selected images from Cloudinary
+    for (const url of removeImages) {
+      if (!images.includes(url)) continue;
+
+      try {
+        const parsedUrl = new URL(url);
+        const parts = parsedUrl.pathname.split("/");
+        const uploadIndex = parts.indexOf("upload");
+
+        if (uploadIndex === -1) continue;
+
+        let imageParts = parts.slice(uploadIndex + 1);
+
+        // Remove transformations and version information
+        const versionIndex = imageParts.findIndex(
+          part => /^v\d+$/.test(part)
+        );
+
+        if (versionIndex !== -1) {
+          imageParts = imageParts.slice(versionIndex + 1);
+        }
+
+        const publicId = imageParts
+          .join("/")
+          .replace(/\.[^/.]+$/, "");
+
+        const result = await cloudinary.uploader.destroy(publicId);
+
+        if (result.result !== "ok" && result.result !== "not found") {
+          throw new Error("Cloudinary image deletion failed");
+        }
+
+        images = images.filter(image => image !== url);
+
+      } catch (error) {
+        console.error("Cloudinary deletion error:", error);
+        throw error;
+      }
+    }
+
+    // New images are already uploaded to Cloudinary
     const newImages = (req.files || []).map(file => file.path);
-    property.set({ ...data, images: [...images, ...newImages].slice(0, 10) });
+
+    // Save updated property
+    property.set({
+      ...data,
+      images: [...images, ...newImages].slice(0, 10)
+    });
+
     await property.save();
+
     res.json(property);
-  } catch (error) { next(error); }
+
+  } catch (error) {
+    next(error);
+  }
 });
+
 
 router.patch("/properties/:id/status", async (req, res, next) => {
   try {
