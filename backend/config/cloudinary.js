@@ -17,6 +17,27 @@ const storage = new CloudinaryStorage({
   },
 });
 
-const { upload } = require("../config/cloudinary");
+const allowed = new Set([
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+]);
 
-module.exports = upload;
+function fileFilter(req, file, cb) {
+  if (!allowed.has(file.mimetype)) {
+    return cb(new Error("Only JPG, PNG and WebP images are allowed"));
+  }
+
+  cb(null, true);
+}
+
+const upload = multer({
+  storage,
+  fileFilter,
+  limits: {
+    fileSize: 5 * 1024 * 1024,
+    files: 10,
+  },
+});
+
+module.exports = { cloudinary, upload };
