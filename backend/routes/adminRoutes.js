@@ -1,9 +1,7 @@
 const router = require("express").Router();
-const fs = require("fs");
-const path = require("path");
 const Property = require("../models/Property");
 const requireAdmin = require("../middleware/auth");
-const { upload }   = require("../config/cloudinary");
+const { upload, cloudinary } = require("../config/cloudinary");
 const parsePropertyInput = require("../utils/propertyInput");
 
 router.use(requireAdmin);
@@ -31,7 +29,7 @@ router.get("/properties", async (_req, res, next) => {
 router.post("/properties", upload.array("images", 10), async (req, res, next) => {
   try {
     const data = parsePropertyInput(req.body);
-    data.images = (req.files || []).map(file => imageUrl(file.filename));
+    data.images = (req.files || []).map(file => file.path);
     const property = await Property.create(data);
     res.status(201).json(property);
   } catch (error) { next(error); }
@@ -57,7 +55,7 @@ router.put("/properties/:id", upload.array("images", 10), async (req, res, next)
       }
     }
 
-    const newImages = (req.files || []).map(file => imageUrl(file.filename));
+    const newImages = (req.files || []).map(file => file.path);
     property.set({ ...data, images: [...images, ...newImages].slice(0, 10) });
     await property.save();
     res.json(property);
@@ -79,17 +77,45 @@ router.patch("/properties/:id/status", async (req, res, next) => {
 
 router.delete("/properties/:id", async (req, res, next) => {
   try {
-    const property = await Property.findByIdAndDelete(req.params.id);
-    if (!property) return res.status(404).json({ message: "Property not found" });
+    const property = await Property.findById(req.params.id);
+
+    if (!property) {
+      return res.status(404).json({
+        message: "Property not found"
+      });
+    }
+
+    // Delete images from Cloudinary
     for (const url of property.images || []) {
       try {
-        const filename = path.basename(new URL(url).pathname);
-        const filePath = path.join(__dirname, "..", "uploads", filename);
-        if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
-      } catch (_) {}
+        const parsedUrl = new URL(url);
+        const parts = parsedUrl.pathname.split("/");
+        const uploadIndex = parts.indexOf("upload");
+
+        if (uploadIndex === -1) continue;
+
+        const publicId = parts
+          .slice(uploadIndex + 2)
+          .join("/")
+          .replace(/\.[^/.]+$/, "");
+
+        await cloudinary.uploader.destroy(publicId);
+
+      } catch (error) {
+        console.error("Cloudinary image deletion error:", error);
+      }
     }
-    res.json({ message: "Property deleted" });
-  } catch (error) { next(error); }
+
+    // Delete property from MongoDB
+    await Property.findByIdAndDelete(req.params.id);
+
+    res.json({
+      message: "Property and Cloudinary images deleted successfully"
+    });
+
+  } catch (error) {
+    next(error);
+  }
 });
 
 module.exports = router;
