@@ -13,7 +13,12 @@ const Admin = require("../models/Admin");
     const email = process.env.ADMIN_EMAIL.trim().toLowerCase();
     const existing = await Admin.findOne({ email });
     if (existing) {
-      console.log(`Admin ${email} already exists. No changes made.`);
+        existing.password = await bcrypt.hash(
+          process.env.ADMIN_PASSWORD,
+          10
+        );
+        await existing.save();
+        console.log(`Admin ${email} password updated successfully.`);
     } else {
       const password = await bcrypt.hash(process.env.ADMIN_PASSWORD, 12);
       await Admin.create({ email, password });

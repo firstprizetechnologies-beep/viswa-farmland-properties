@@ -3,7 +3,7 @@ const fs = require("fs");
 const path = require("path");
 const Property = require("../models/Property");
 const requireAdmin = require("../middleware/auth");
-const upload = require("../middleware/upload");
+const { upload }   = require("../config/cloudinary");
 const parsePropertyInput = require("../utils/propertyInput");
 
 router.use(requireAdmin);
